@@ -1,0 +1,26 @@
+<!-- task-edit.component.html -->
+<h2 class="text-xl font-bold mb-4">Update Task</h2>
+<div class="mb-4 p-4">
+  <!-- Form fields for updating task data -->
+  <mat-form-field class="w-full">
+    <input matInput [(ngModel)]="data.task.title" placeholder="Title" class="w-full">
+  </mat-form-field>
+</div>
+<div class="mb-4 p-4">
+  <mat-form-field class="w-full">
+    <textarea matInput [(ngModel)]="data.task.description" placeholder="Description" class="w-full"></textarea>
+  </mat-form-field>
+</div>
+<div class="mb-4 p-4">
+  <mat-form-field class="w-full">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="data.task.status" name="status" class="w-full">
+      <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="flex justify-end p-4">
+  <button mat-button class="mr-2 text-gray-700" (click)="dialogRef.close()">Cancel</button>
+  <button mat-button color="primary" class="bg-slate-500 text-white px-4 py-2 rounded-lg hover:bg-slate-600" (click)="updateTask()">Update</button>
+</div>
+
