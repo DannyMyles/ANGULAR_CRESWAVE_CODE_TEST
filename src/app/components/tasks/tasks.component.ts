@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskEditComponent } from '../task-edit/task-edit.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -45,13 +45,21 @@ export class TasksComponent implements OnInit {
     this.taskService.createTasklist(this.title, this.description, this.status).subscribe(
       (res: Tasklist) => {
         this.taskList.push(res);
-        this.ngOnInit()
+        this.ngOnInit();
+        Swal.fire('Success', 'Task created successfully', 'success');
+        // Clear form fields
+        this.title = '';
+        this.description = '';
+        this.status = '';
       },
       (error) => {
         console.error('Error creating todo:', error);
+        Swal.fire('Error', 'Failed to create task', 'error');
       }
     );
   }
+  
+  
 
   updateTodoList(task: any) {
     console.log("TaskId here", task)
@@ -67,14 +75,26 @@ export class TasksComponent implements OnInit {
   // Delete task
   deleteTodolist(id: string): void {
     console.log("Deleting task with id:", id);
-    this.taskService.deleteTask(id).subscribe(() => {
-        this.ngOnInit()
-        console.log(`Deleted task with id ${id}`);
-      },
-      (error) => {
-        console.error('Error deleting task:', error);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this task!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.taskService.deleteTask(id).subscribe(() => {
+          this.ngOnInit();
+          Swal.fire('Deleted!', 'Your task has been deleted.', 'success');
+        },
+        (error) => {
+          console.error('Error deleting task:', error);
+          Swal.fire('Error', 'Failed to delete task', 'error');
+        });
       }
-    );
+    });
   }
   
 }

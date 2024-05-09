@@ -3,6 +3,7 @@ import { TaskService } from 'src/app/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { Tasklist } from 'src/app/tasklist/interface/tasklist';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-task-edit',
   templateUrl: './task-edit.component.html',
@@ -23,7 +24,7 @@ export class TaskEditComponent implements OnInit {
   }
   
   updateTask(): void {
-    let id = this.data.task._id
+    let id = this.data.task._id;
     console.log("Data received:", id);
     if (!id) {
       console.error('Cannot update task: _id is undefined');
@@ -35,11 +36,12 @@ export class TaskEditComponent implements OnInit {
       .subscribe(
         () => {
           console.log(`Task with ID ${this.task._id} updated successfully`);
+          Swal.fire('Success', 'Task updated successfully', 'success');
           this.dialogRef.close();
         },
         (error) => {
           console.error('Error updating task:', error);
-          // Handle error or display error message to the user
+          Swal.fire('Error', 'Failed to update task', 'error');
         }
       );
   }
