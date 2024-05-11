@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "material-icons": "^1.13.12",
+    "ngx-spinner": "^16.0.2",
     "ngx-sweetalert2": "^0.2.7",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.10.8",

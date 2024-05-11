@@ -20,42 +20,49 @@
   <div class=" bg-gray-600">
     <mat-divider class="h-full border-l bg-gray-600"></mat-divider>
     </div>
-  <div class="w-full md:w-1/2 p-4 rounded-sm border-collapse md:border-l-0 md:border-r-0 md:border-l">
-    <table mat-table [dataSource]="dataSource" class="w-full">
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Title </th>
-        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{ 'text-green-700': element.status === 'complete', 'text-blue-600': element.status === 'incomplete' }">
-          {{element.status}}
-        </td>
-      </ng-container>
-      
-      <ng-container matColumnDef="update">
-        <th mat-header-cell *matHeaderCellDef> Update </th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="accent" (click)="updateTodoList(element)">
-            <mat-icon class="mat-18 text-blue-500">system_update</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> Delete </th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn" (click)="deleteTodolist(element._id)">
-            <mat-icon class="mat-18 text-red-500">delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <div class="relative w-full md:w-1/2 p-4 rounded-sm border-collapse md:border-l-0 md:border-r-0 md:border-l">
+    <div *ngIf="!isLoading" class="">
+      <table mat-table [dataSource]="dataSource" class="w-full">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{ 'text-green-700': element.status === 'complete', 'text-blue-600': element.status === 'incomplete' }">
+            {{element.status}}
+          </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="update">
+          <th mat-header-cell *matHeaderCellDef> Update </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="updateTodoList(element)">
+              <mat-icon class="mat-18 text-blue-500">system_update</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef> Delete </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="deleteTodolist(element._id)">
+              <mat-icon class="mat-18 text-red-500">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div *ngIf="isLoading" class="top-0 left-0 w-full h-full flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 absolute">
+      <ngx-spinner  bdColor = "rgba(0, 0, 0, 0.2)" size = "medium" color = "#dedcdc" type = "ball-spin" [fullScreen] = "false">
+        <p class="text-white">Loading...</p>
+      </ngx-spinner>
+    </div>
   </div>
 </div>

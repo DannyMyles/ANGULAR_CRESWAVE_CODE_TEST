@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskEditComponent } from '../task-edit/task-edit.component';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -20,26 +21,33 @@ export class TasksComponent implements OnInit {
   public title: string = '';
   public description: string = '';
   public status: string = '';
-
+  public isLoading: boolean = true
   public statusList = this.taskService.TaskStatus
 
-  constructor( private taskService: TaskService, private editDialog: MatDialog) {}
+  constructor( private taskService: TaskService, private editDialog: MatDialog, private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
     this.getTasks();
   }
  
   getTasks() {
+    this.isLoading = true;
+    this.spinner.show();
     this.taskService.getTasks().subscribe(
       (res: Tasklist[]) => {
-        this.taskList = res
-          this.dataSource = new MatTableDataSource<Tasklist>(res)
-          this.dataSource.paginator = this.paginator
+        this.taskList = res;
+        this.dataSource = new MatTableDataSource<Tasklist>(res);
+        this.dataSource.paginator = this.paginator;
+        this.spinner.hide();
+        this.isLoading = false;
       },
       error => {
+        this.spinner.hide();
         console.error('Error fetching tasks:', error);
+        this.isLoading = false;
       }
     );
   }
+  
   // Create new task
   createTodolist(): void {
     this.taskService.createTasklist(this.title, this.description, this.status).subscribe(
