@@ -1,6 +1,7 @@
 <div class="flex flex-col md:flex-row bg-white px-4 py-6">
   <!-- Form section -->
   <div class="container-main p-4 flex flex-wrap items-center w-full md:w-1/2">
+    <h1 class=" font-extrabold text-xl ">TASK MANAGER</h1>
     <mat-form-field class="w-full mb-4 md:mr-4">
       <mat-label class="text-sm font-semibold">Title</mat-label>
       <input matInput placeholder="Enter title" [(ngModel)]="title" class="w-full">
@@ -59,8 +60,8 @@
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     </div>
-    <div *ngIf="isLoading" class="top-0 left-0 w-full h-full flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 absolute">
-      <ngx-spinner  bdColor = "rgba(0, 0, 0, 0.2)" size = "medium" color = "#dedcdc" type = "ball-spin" [fullScreen] = "false">
+    <div *ngIf="isLoading" class="top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 z-50 absolute">
+      <ngx-spinner  bdColor = "rgba(0, 0, 0, 0.1)" size = "medium" color = "#dedcdc" type = "ball-spin" [fullScreen] = "false">
         <p class="text-white">Loading...</p>
       </ngx-spinner>
     </div>
